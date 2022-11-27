@@ -6,7 +6,7 @@ import Map, {
 	NavigationControl,
 } from 'react-map-gl';
 import Filter from './components/Filter';
-import trashcansData from './geojson/affaldskurve.json';
+import trashcansData from './geojson/trashcans.json';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState } from 'react';
 import TrashCans from './types';
@@ -22,7 +22,6 @@ const styles = {
 	},
 };
 
-
 function App() {
 	const [viewState, setViewState] = useState({
 		longitude: 12.56,
@@ -30,9 +29,9 @@ function App() {
 		zoom: 10.5,
 	});
 	const [selectedCity, setSelectedCity] = useState('');
-  const [darkMode, setDarkMode] = useState(false);
+	const [darkMode, setDarkMode] = useState(false);
 
-  const layerStyle: CircleLayer = {
+	const layerStyle: CircleLayer = {
 		id: 'point',
 		type: 'circle',
 		paint: {
@@ -56,25 +55,33 @@ function App() {
 			: trashcans.features;
 	const finalCities = { type: 'FeatureCollection', features: filteredCities };
 
-  console.log(darkMode);
+	console.log(process.env.REACT_APP_MAPBOX_TOKEN);
+
 	return (
 		<Box sx={styles.container}>
 			<Map
 				mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
 				{...viewState}
 				onMove={(evt) => setViewState(evt.viewState)}
-				mapStyle={darkMode === false ? 'mapbox://styles/mapbox/streets-v11':'mapbox://styles/mapbox/dark-v11'}
+				mapStyle={
+					darkMode === false
+						? 'mapbox://styles/mapbox/streets-v11'
+						: 'mapbox://styles/mapbox/dark-v11'
+				}
 			>
 				<Filter
 					setSelectedCity={setSelectedCity}
-          darkMode={darkMode === true ? true : false}
+					darkMode={darkMode === true ? true : false}
 					setDarkMode={setDarkMode}
 					cities={uniqueCities}
 				></Filter>
 				<Source id="my-data" type="geojson" data={finalCities as any}>
 					<Layer {...layerStyle} />
 				</Source>
-				<NavigationControl style={{backgroundColor: darkMode === false ? 'white' :'grey'}} position="bottom-left"></NavigationControl>
+				<NavigationControl
+					style={{ backgroundColor: darkMode === false ? 'white' : 'grey' }}
+					position="bottom-left"
+				></NavigationControl>
 			</Map>
 		</Box>
 	);
