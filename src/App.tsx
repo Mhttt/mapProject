@@ -55,8 +55,6 @@ function App() {
 			: trashcans.features;
 	const finalCities = { type: 'FeatureCollection', features: filteredCities };
 
-	console.log(process.env.REACT_APP_MAPBOX_TOKEN);
-
 	return (
 		<Box sx={styles.container}>
 			<Map
