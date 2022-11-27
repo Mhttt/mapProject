@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # json
-sportshaller.json
+affaldskurve.json
 
 # env
 .env
