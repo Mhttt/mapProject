@@ -14,29 +14,30 @@ interface Props {
 	cities: string[];
 }
 
-const styles = {
-	searchBar: {
-		width: '70%',
-		padding: '20px',
-		'& .MuiInputBase-root': {
-			backgroundColor: '#f8f8f8',
-		},
-	},
-	container: {
-		display: 'flex',
-		width: '500px',
-		height: '55px',
-	},
-	button: {
-		width: '10%',
-		top: '20px',
-		backgroundColor: 'white',
-		borderRadius: '10%',
-		color: 'black',
-	},
-};
 
 const Filter: FC<Props> = ({ setSelectedCity, setDarkMode, cities, darkMode }) => {
+  const styles = {
+		searchBar: {
+			width: '70%',
+			padding: '20px',
+			'& .MuiInputBase-root': {
+				backgroundColor: darkMode === false ? '#f8f8f8' : 'grey',
+			},
+		},
+		container: {
+			display: 'flex',
+			width: '500px',
+			height: '55px',
+		},
+		button: {
+			width: '10%',
+			top: '20px',
+			backgroundColor: darkMode === false ? 'white' : 'grey',
+			borderRadius: '10%',
+			color: 'black',
+		},
+	};
+
 	return (
     
 		<Box sx={styles.container}>

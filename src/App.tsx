@@ -22,14 +22,6 @@ const styles = {
 	},
 };
 
-const layerStyle: CircleLayer = {
-	id: 'point',
-	type: 'circle',
-	paint: {
-		'circle-radius': 5,
-		'circle-color': 'red',
-	},
-};
 
 function App() {
 	const [viewState, setViewState] = useState({
@@ -39,6 +31,15 @@ function App() {
 	});
 	const [selectedCity, setSelectedCity] = useState('');
   const [darkMode, setDarkMode] = useState(false);
+
+  const layerStyle: CircleLayer = {
+		id: 'point',
+		type: 'circle',
+		paint: {
+			'circle-radius': 5,
+			'circle-color': darkMode === false ? 'red' : 'darkblue',
+		},
+	};
 
 	const cities = trashcans.features.map((item) => {
 		return item.properties.driftsbydel;
