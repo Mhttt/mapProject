@@ -26,7 +26,7 @@ function App() {
 	const [viewState, setViewState] = useState({
 		longitude: 12.56,
 		latitude: 55.68,
-		zoom: 10.5,
+		zoom: 11,
 	});
 	const [selectedCity, setSelectedCity] = useState('');
 	const [darkMode, setDarkMode] = useState(false);
