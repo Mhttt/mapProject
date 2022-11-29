@@ -11,6 +11,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState } from 'react';
 import TrashCans from './types';
 import { Box } from '@mui/material';
+import PopUp from './components/PopUp';
 
 const trashcans = trashcansData as TrashCans;
 
@@ -81,6 +82,15 @@ function App() {
 					position="bottom-left"
 				></NavigationControl>
 			</Map>
+			<PopUp
+				location="Ørstadsparken"
+				municipality="Amager"
+        emptyMethod='Maskinel'
+				onClose={() => {
+					console.log('hej');
+				}}
+				coords={[[12.56586039, 55.6793311]]}
+			></PopUp>
 		</Box>
 	);
 }

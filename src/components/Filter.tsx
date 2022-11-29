@@ -39,7 +39,6 @@ const Filter: FC<Props> = ({ setSelectedCity, setDarkMode, cities, darkMode }) =
 	};
 
 	return (
-    
 		<Box sx={styles.container}>
 			<Autocomplete
 				freeSolo
@@ -50,9 +49,15 @@ const Filter: FC<Props> = ({ setSelectedCity, setDarkMode, cities, darkMode }) =
 				sx={styles.searchBar}
 				renderInput={(params) => <TextField {...params} label="Search" />}
 			/>
-			<IconButton disableRipple={false} sx={styles.button} onClick={() => {setDarkMode(!darkMode)}}> 
-        <ModeNightIcon></ModeNightIcon>
-       </IconButton>
+			<IconButton
+				disableRipple={false}
+				sx={styles.button}
+				onClick={() => {
+					setDarkMode(!darkMode);
+				}}
+			>
+				<ModeNightIcon></ModeNightIcon>
+			</IconButton>
 		</Box>
 	);
 };
