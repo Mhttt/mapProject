@@ -33,7 +33,7 @@ function App() {
 	const [selectedCity, setSelectedCity] = useState('');
 	const [darkMode, setDarkMode] = useState(false);
 	const [selectedCoords, setSelectedCoords] = useState<number[]>()
-	const [showPopup, setShowPopup] = useState(true)
+	const [, setShowPopup] = useState(true)
 	const [zoomLevel, setZoomLevel] = useState(11)
 
 	const layerStyle: CircleLayer = {
