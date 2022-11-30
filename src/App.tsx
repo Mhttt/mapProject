@@ -35,6 +35,11 @@ function App() {
 	const [selectedCoords, setSelectedCoords] = useState<number[]>()
 	const [, setShowPopup] = useState(true)
 	const [zoomLevel, setZoomLevel] = useState(11)
+	const [popUpv2, setPopUp] = useState({
+		location: '',
+		city: '',
+		method: '',
+	})
 
 	const layerStyle: CircleLayer = {
 		id: 'point',
@@ -58,13 +63,6 @@ function App() {
 					(feature) => feature.properties.driftsbydel === selectedCity
 			  )
 			: trashcans.features;
-
- 
-  // For loading the dynamic popupcard data
-  // const toCheck = [[selectedCoords !== undefined ? selectedCoords[0] : 0, selectedCoords !== undefined ? selectedCoords[1] : 0 ]]
-  // const filteredCity = trashcans.features.filter((feature) => feature.geometry.coordinates[0][0] === toCheck[0][0] && feature.geometry.coordinates[0][1] === toCheck[0][1])
-  
-    
   
 	const addClickedCoord = (
 		event: mapboxgl.MapLayerMouseEvent,
@@ -81,6 +79,11 @@ function App() {
 				const longToAdd = list[i].geometry.coordinates[0][0];
 				const latToAdd = list[i].geometry.coordinates[0][1];
 				listTest.push([longToAdd, latToAdd]);
+				setPopUp({
+					location: list[i].properties.stednavn,
+					city: list[i].properties.driftsbydel,
+					method: list[i].properties.toemningsmetode,
+				})
 				setSelectedCoords([
 					list[i].geometry.coordinates[0][0],
 					list[i].geometry.coordinates[0][1],
@@ -125,10 +128,14 @@ function App() {
 						onClose={() => setSelectedCoords(undefined)}
 					>
 						<PopUp
-							location="Ørstadsparken"
-							municipality="Amager"
-							emptyMethod="Maskinel"
-							onClose={() => {
+							location={popUpv2.location}
+							municipality={popUpv2.city}
+							emptyMethod={popUpv2.method}
+							onClose={() => { setPopUp({
+								location: '',
+								city: '',
+								method: '',
+							})
 							}}
 							coords={[[12.56586039, 55.6793311]]}
 						></PopUp>
