@@ -46,7 +46,7 @@ function App() {
 		type: 'circle',
 		paint: {
 			'circle-radius': 5,
-			'circle-color': darkMode === false ? 'red' : 'darkblue',
+			'circle-color': darkMode === false ? 'red' : 'darkgreen',
 		},
 	};
 
@@ -125,13 +125,15 @@ function App() {
 						longitude={selectedCoords[0]}
 						latitude={selectedCoords[1]}
 						anchor="bottom"
-						onClose={() => setSelectedCoords(undefined)}
+						onClose={() => {setSelectedCoords(undefined)}}
+						closeOnClick={false}
 					>
 						<PopUp
 							location={popUpv2.location}
 							municipality={popUpv2.city}
 							emptyMethod={popUpv2.method}
-							onClose={() => { setPopUp({
+							onClose={() => { 
+								setPopUp({
 								location: '',
 								city: '',
 								method: '',
