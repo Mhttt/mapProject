@@ -29,19 +29,19 @@ const Legend: FC<legendProps> = ({ legend1, legend2, legend3, legend4 }) => {
 					</Typography>
 				</Grid>
 				<Grid item xs={6}>
-					<img src={legend1} height="10px"></img>
+					<img src={legend1} height="10px" alt="red circle"></img>
 					<Typography display="inline"> Trashcan</Typography>
 				</Grid>
 				<Grid item xs={6}>
-					<img src={legend2} height="10px"></img>
+					<img src={legend2} height="10px" alt="blue circle"></img>
 					<Typography display="inline"> Sportshall</Typography>
 				</Grid>
 				<Grid item xs={6}>
-					<img src={legend3} height="10px"></img>
+					<img src={legend3} height="10px" alt="yellow circle"></img>
 					<Typography display="inline"> Toilet</Typography>
 				</Grid>
 				<Grid item xs={6}>
-					<img src={legend4} height="10px"></img>
+					<img src={legend4} height="10px" alt="green circle"></img>
 					<Typography display="inline"> Parking lot</Typography>
 				</Grid>
 			</Grid>

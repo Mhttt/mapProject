@@ -11,7 +11,7 @@ import trashcansData from './geojson/trashcans.json';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState } from 'react';
 import TrashCans, { Features } from './types';
-import { Box, Card, Grid, Typography } from '@mui/material';
+import { Box} from '@mui/material';
 import PopUp from './components/PopUp';
 import Legend from './components/Legend';
 import redCircle from './image/redCircle.png'
