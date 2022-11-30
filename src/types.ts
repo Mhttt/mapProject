@@ -4,8 +4,8 @@ export default interface TrashCans {
   features: Features[]
 }
 
-interface Features {
-	geomtry: Geometry;
+export interface Features {
+	geometry: Geometry;
 	properties: Properties;
 }
 
@@ -15,5 +15,8 @@ interface Geometry {
 }
 
 interface Properties {
-	driftsbydel: string
+	driftsbydel: string;
+  stednavn: string;
+  toemningsmetode: string;
+
 }
