@@ -35,7 +35,7 @@ function App() {
 	const [selectedCoords, setSelectedCoords] = useState<number[]>()
 	const [, setShowPopup] = useState(true)
 	const [zoomLevel, setZoomLevel] = useState(11)
-	const [popUpv2, setPopUp] = useState({
+	const [popUpCard, setPopUpCard] = useState({
 		location: '',
 		city: '',
 		method: '',
@@ -79,7 +79,7 @@ function App() {
 				const longToAdd = list[i].geometry.coordinates[0][0];
 				const latToAdd = list[i].geometry.coordinates[0][1];
 				listTest.push([longToAdd, latToAdd]);
-				setPopUp({
+				setPopUpCard({
 					location: list[i].properties.stednavn,
 					city: list[i].properties.driftsbydel,
 					method: list[i].properties.toemningsmetode,
@@ -125,20 +125,23 @@ function App() {
 						longitude={selectedCoords[0]}
 						latitude={selectedCoords[1]}
 						anchor="bottom"
-						onClose={() => {setSelectedCoords(undefined)}}
+						onClose={() => {
+							setSelectedCoords(undefined);
+						}}
 						closeOnClick={false}
 					>
 						<PopUp
-							location={popUpv2.location}
-							municipality={popUpv2.city}
-							emptyMethod={popUpv2.method}
-							onClose={() => { 
-								setPopUp({
-								location: '',
-								city: '',
-								method: '',
-							})
+							location={popUpCard.location}
+							municipality={popUpCard.city}
+							emptyMethod={popUpCard.method}
+							onClose={() => {
+								setPopUpCard({
+									location: '',
+									city: '',
+									method: '',
+								});
 							}}
+							img={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${selectedCoords[0]},${selectedCoords[1]},12,0/200x200?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
 							coords={[[12.56586039, 55.6793311]]}
 						></PopUp>
 					</Popup>

@@ -6,11 +6,12 @@ interface PopUpProps {
   municipality: string,
   onClose: () => void,
   emptyMethod: string,
-  coords: number[][]
+  coords: number[][],
+  img: string
 }
 
-const PopUp: FC<PopUpProps> = ({location, municipality, emptyMethod, onClose, coords}) => {
-  const mapImage = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${coords[0][0]},${coords[0][1]},12,0/200x200?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`;
+const PopUp: FC<PopUpProps> = ({location, municipality, emptyMethod, onClose, coords, img}) => {
+  //const mapImage = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${coords[0][0]},${coords[0][1]},12,0/200x200?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`;
   return (
 		<Box
 			sx={{
@@ -37,7 +38,7 @@ const PopUp: FC<PopUpProps> = ({location, municipality, emptyMethod, onClose, co
 				</Box>
 			</Box>
 			<Box>
-				<img style={{margin: '5px'}} src={mapImage} alt="Location of post" />
+				<img style={{margin: '5px'}} src={img} alt="Location of post" />
 			</Box>
 		</Box>
 	);
