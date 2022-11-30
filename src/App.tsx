@@ -9,10 +9,16 @@ import Map, {
 import Filter from './components/Filter';
 import trashcansData from './geojson/trashcans.json';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import {useState } from 'react';
+import { useState } from 'react';
 import TrashCans, { Features } from './types';
-import { Box } from '@mui/material';
+import { Box, Card, Grid, Typography } from '@mui/material';
 import PopUp from './components/PopUp';
+import Legend from './components/Legend';
+import redCircle from './image/redCircle.png'
+import blueCircle from './image/blueCircle.png';
+import greenCircle from './image/greenCircle.png';
+import yellowCircle from './image/yellowCircle.png';
+
 
 const trashcans = trashcansData as TrashCans;
 
@@ -32,14 +38,14 @@ function App() {
 	});
 	const [selectedCity, setSelectedCity] = useState('');
 	const [darkMode, setDarkMode] = useState(false);
-	const [selectedCoords, setSelectedCoords] = useState<number[]>()
-	const [, setShowPopup] = useState(true)
-	const [zoomLevel, setZoomLevel] = useState(11)
+	const [selectedCoords, setSelectedCoords] = useState<number[]>();
+	const [, setShowPopup] = useState(true);
+	const [zoomLevel, setZoomLevel] = useState(11);
 	const [popUpCard, setPopUpCard] = useState({
 		location: '',
 		city: '',
 		method: '',
-	})
+	});
 
 	const layerStyle: CircleLayer = {
 		id: 'point',
@@ -63,7 +69,7 @@ function App() {
 					(feature) => feature.properties.driftsbydel === selectedCity
 			  )
 			: trashcans.features;
-  
+
 	const addClickedCoord = (
 		event: mapboxgl.MapLayerMouseEvent,
 		list: Features[]
@@ -83,7 +89,7 @@ function App() {
 					location: list[i].properties.stednavn,
 					city: list[i].properties.driftsbydel,
 					method: list[i].properties.toemningsmetode,
-				})
+				});
 				setSelectedCoords([
 					list[i].geometry.coordinates[0][0],
 					list[i].geometry.coordinates[0][1],
@@ -153,6 +159,12 @@ function App() {
 					style={{ backgroundColor: darkMode === false ? 'white' : 'grey' }}
 					position="bottom-left"
 				></NavigationControl>
+				<Legend
+					legend1={redCircle}
+					legend2={blueCircle}
+					legend3={yellowCircle}
+					legend4={greenCircle}
+				></Legend>
 			</Map>
 		</Box>
 	);
