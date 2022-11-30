@@ -37,7 +37,7 @@ const PopUp: FC<PopUpProps> = ({location, municipality, emptyMethod, onClose, co
 				</Box>
 			</Box>
 			<Box>
-				<img style={{margin: '5px'}} src={mapImage} alt="The image of the post" />
+				<img style={{margin: '5px'}} src={mapImage} alt="Location of post" />
 			</Box>
 		</Box>
 	);

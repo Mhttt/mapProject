@@ -9,11 +9,10 @@ import Map, {
 import Filter from './components/Filter';
 import trashcansData from './geojson/trashcans.json';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import TrashCans, { Features } from './types';
 import { Box } from '@mui/material';
 import PopUp from './components/PopUp';
-import { forEachTrailingCommentRange } from 'typescript';
 
 const trashcans = trashcansData as TrashCans;
 
@@ -36,7 +35,6 @@ function App() {
 	const [selectedCoords, setSelectedCoords] = useState<number[]>()
 	const [showPopup, setShowPopup] = useState(true)
 	const [zoomLevel, setZoomLevel] = useState(11)
-  const [singleCity, setSingleCity] = useState({});
 
 	const layerStyle: CircleLayer = {
 		id: 'point',
