@@ -10,10 +10,10 @@ import Filter from './components/Filter';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect, useState } from 'react';
 import TrashCans, { Features } from './types';
-import { Box} from '@mui/material';
+import { Box } from '@mui/material';
 import PopUp from './components/PopUp';
 import Legend from './components/Legend';
-import redCircle from './image/redCircle.png'
+import redCircle from './image/redCircle.png';
 import blueCircle from './image/blueCircle.png';
 import greenCircle from './image/greenCircle.png';
 import yellowCircle from './image/yellowCircle.png';
@@ -24,6 +24,10 @@ const styles = {
 		width: '100vw',
 		height: '100vh',
 	},
+	popUpStyle: {
+		minWidth: '440px',
+		minHeight: '300px',
+	}
 };
 
 function App() {
@@ -32,7 +36,7 @@ function App() {
 		latitude: 55.68,
 		zoom: 11,
 	});
-  const [data, setData] = useState <TrashCans>();
+	const [data, setData] = useState<TrashCans>();
 	const [selectedCity, setSelectedCity] = useState('');
 	const [darkMode, setDarkMode] = useState(false);
 	const [selectedCoords, setSelectedCoords] = useState<number[]>();
@@ -44,13 +48,14 @@ function App() {
 		method: '',
 	});
 
-  useEffect(() => {
-    fetch(
+	useEffect(() => {
+		fetch(
 			'https://wfs-kbhkort.kk.dk/k101/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=k101:affaldskurve_puma&outputFormat=json&SRSNAME=EPSG:4326'
-		).then(response => response.json()).then(data => setData(data));
-  }, [])
+		)
+			.then((response) => response.json())
+			.then((data) => setData(data));
+	}, []);
 
-  console.log(data)
 	const layerStyle: CircleLayer = {
 		id: 'point',
 		type: 'circle',
@@ -112,7 +117,10 @@ function App() {
 					setZoomLevel(e.viewState.zoom);
 				}}
 				onClick={(e) => {
-					addClickedCoord(e, filteredCities !== undefined ? filteredCities : []);
+					addClickedCoord(
+						e,
+						filteredCities !== undefined ? filteredCities : []
+					);
 				}}
 				mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
 				{...viewState}
@@ -131,7 +139,7 @@ function App() {
 				></Filter>
 				{selectedCoords && (
 					<Popup
-						style={{ minWidth: '440px', minHeight: '300px' }}
+						style={styles.popUpStyle}
 						longitude={selectedCoords[0]}
 						latitude={selectedCoords[1]}
 						anchor="bottom"
@@ -168,7 +176,7 @@ function App() {
 					legend2={blueCircle}
 					legend3={yellowCircle}
 					legend4={greenCircle}
-          darkMode={darkMode}
+					darkMode={darkMode}
 				></Legend>
 			</Map>
 		</Box>
