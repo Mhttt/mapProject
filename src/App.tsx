@@ -50,6 +50,7 @@ function App() {
 		).then(response => response.json()).then(data => setData(data));
   }, [])
 
+  console.log(data)
 	const layerStyle: CircleLayer = {
 		id: 'point',
 		type: 'circle',
@@ -167,6 +168,7 @@ function App() {
 					legend2={blueCircle}
 					legend3={yellowCircle}
 					legend4={greenCircle}
+          darkMode={darkMode}
 				></Legend>
 			</Map>
 		</Box>
