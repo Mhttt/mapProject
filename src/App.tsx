@@ -7,9 +7,8 @@ import Map, {
 	Popup,
 } from 'react-map-gl';
 import Filter from './components/Filter';
-import trashcansData from './geojson/trashcans.json';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TrashCans, { Features } from './types';
 import { Box} from '@mui/material';
 import PopUp from './components/PopUp';
@@ -18,9 +17,6 @@ import redCircle from './image/redCircle.png'
 import blueCircle from './image/blueCircle.png';
 import greenCircle from './image/greenCircle.png';
 import yellowCircle from './image/yellowCircle.png';
-
-
-const trashcans = trashcansData as TrashCans;
 
 const styles = {
 	container: {
@@ -36,6 +32,7 @@ function App() {
 		latitude: 55.68,
 		zoom: 11,
 	});
+  const [data, setData] = useState <TrashCans>();
 	const [selectedCity, setSelectedCity] = useState('');
 	const [darkMode, setDarkMode] = useState(false);
 	const [selectedCoords, setSelectedCoords] = useState<number[]>();
@@ -47,6 +44,12 @@ function App() {
 		method: '',
 	});
 
+  useEffect(() => {
+    fetch(
+			'https://wfs-kbhkort.kk.dk/k101/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=k101:affaldskurve_puma&outputFormat=json&SRSNAME=EPSG:4326'
+		).then(response => response.json()).then(data => setData(data));
+  }, [])
+
 	const layerStyle: CircleLayer = {
 		id: 'point',
 		type: 'circle',
@@ -56,7 +59,7 @@ function App() {
 		},
 	};
 
-	const cities = trashcans.features.map((item) => {
+	const cities = data?.features.map((item) => {
 		return item.properties.driftsbydel;
 	});
 
@@ -65,10 +68,10 @@ function App() {
 	);
 	const filteredCities =
 		selectedCity !== ''
-			? trashcans.features.filter(
+			? data?.features.filter(
 					(feature) => feature.properties.driftsbydel === selectedCity
 			  )
-			: trashcans.features;
+			: data?.features;
 
 	const addClickedCoord = (
 		event: mapboxgl.MapLayerMouseEvent,
@@ -108,7 +111,7 @@ function App() {
 					setZoomLevel(e.viewState.zoom);
 				}}
 				onClick={(e) => {
-					addClickedCoord(e, filteredCities);
+					addClickedCoord(e, filteredCities !== undefined ? filteredCities : []);
 				}}
 				mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
 				{...viewState}
