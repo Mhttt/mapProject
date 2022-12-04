@@ -18,5 +18,8 @@ interface Properties {
 	driftsbydel: string;
   stednavn: string;
   toemningsmetode: string;
-
+  navn: string;
+  adresse: string;
+  postnrby: string;
+  anvendelse: string;
 }

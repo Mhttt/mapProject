@@ -6,14 +6,20 @@ interface legendProps {
 	legend2: string;
 	legend3: string;
 	legend4: string;
-  darkMode: boolean,
+	darkMode: boolean;
 }
 
-const Legend: FC<legendProps> = ({ legend1, legend2, legend3, legend4, darkMode }) => {
+const Legend: FC<legendProps> = ({
+	legend1,
+	legend2,
+	legend3,
+	legend4,
+	darkMode,
+}) => {
 	return (
 		<Box
 			sx={{
-				backgroundColor: darkMode ? 'grey': 'white',
+				backgroundColor: darkMode ? 'grey' : 'white',
 				position: 'absolute',
 				right: '0px',
 				bottom: '20px',
@@ -38,8 +44,8 @@ const Legend: FC<legendProps> = ({ legend1, legend2, legend3, legend4, darkMode 
 					<Typography display="inline"> Trashcan</Typography>
 				</Grid>
 				<Grid item xs={6}>
-					<img src={legend2} height="10px" alt="blue circle"></img>
-					<Typography display="inline"> Sportshall</Typography>
+					<img src={legend2} height="15px" alt="blue circle"></img>
+					<Typography display="inline"> Recycle centre</Typography>
 				</Grid>
 				<Grid item xs={6}>
 					<img src={legend3} height="10px" alt="yellow circle"></img>

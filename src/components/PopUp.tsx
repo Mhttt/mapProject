@@ -4,9 +4,7 @@ import { FC } from 'react';
 interface PopUpProps {
 	location: string;
 	municipality: string;
-	onClose: () => void;
 	emptyMethod: string;
-	coords: number[][];
 	img: string;
 }
 
@@ -14,8 +12,6 @@ const PopUp: FC<PopUpProps> = ({
 	location,
 	municipality,
 	emptyMethod,
-	onClose,
-	coords,
 	img,
 }) => {
 	return (

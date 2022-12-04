@@ -1,10 +1,12 @@
 import './App.css';
+import * as React from 'react';
 import Map, {
 	Source,
 	Layer,
 	CircleLayer,
 	NavigationControl,
 	Popup,
+	SymbolLayer,
 } from 'react-map-gl';
 import Filter from './components/Filter';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -17,6 +19,7 @@ import redCircle from './image/redCircle.png';
 import blueCircle from './image/blueCircle.png';
 import greenCircle from './image/greenCircle.png';
 import yellowCircle from './image/yellowCircle.png';
+import recycle from './image/recycle.png';
 
 const styles = {
 	container: {
@@ -27,7 +30,7 @@ const styles = {
 	popUpStyle: {
 		minWidth: '440px',
 		minHeight: '300px',
-	}
+	},
 };
 
 function App() {
@@ -36,7 +39,8 @@ function App() {
 		latitude: 55.68,
 		zoom: 11,
 	});
-	const [data, setData] = useState<TrashCans>();
+	const [trashcansData, setTrashcansData] = useState<TrashCans>();
+	const [recycleData, setRecycleData] = useState<TrashCans>();
 	const [selectedCity, setSelectedCity] = useState('');
 	const [darkMode, setDarkMode] = useState(false);
 	const [selectedCoords, setSelectedCoords] = useState<number[]>();
@@ -53,10 +57,15 @@ function App() {
 			'https://wfs-kbhkort.kk.dk/k101/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=k101:affaldskurve_puma&outputFormat=json&SRSNAME=EPSG:4326'
 		)
 			.then((response) => response.json())
-			.then((data) => setData(data));
+			.then((data) => setTrashcansData(data));
+		fetch(
+			'https://wfs-kbhkort.kk.dk/k101/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=k101:genbrugsstation&outputFormat=json&SRSNAME=EPSG:4326'
+		)
+			.then((response) => response.json())
+			.then((data) => setRecycleData(data));
 	}, []);
 
-	const layerStyle: CircleLayer = {
+	const layerStyleTrashCans: CircleLayer = {
 		id: 'point',
 		type: 'circle',
 		paint: {
@@ -64,20 +73,34 @@ function App() {
 			'circle-color': darkMode === false ? 'red' : 'darkgreen',
 		},
 	};
+	const layerStyleRecycleCentre: SymbolLayer = {
+		id: 'recycleCentre',
+		type: 'symbol',
+		layout: {
+			'icon-image': 'cemetery-15',
+			'icon-size': 2,
+		},
+	};
 
-	const cities = data?.features.map((item) => {
+	const cities = trashcansData?.features.map((item) => {
 		return item.properties.driftsbydel;
 	});
 
 	const uniqueCities = Array.from(new Set(cities)).filter(
 		(item) => item !== null
 	);
+
 	const filteredCities =
 		selectedCity !== ''
-			? data?.features.filter(
+			? trashcansData?.features.filter(
 					(feature) => feature.properties.driftsbydel === selectedCity
 			  )
-			: data?.features;
+			: trashcansData?.features;
+
+	const recycleStations = {
+		type: 'FeatureCollection',
+		features: recycleData?.features,
+	};
 
 	const addClickedCoord = (
 		event: mapboxgl.MapLayerMouseEvent,
@@ -152,20 +175,19 @@ function App() {
 							location={popUpCard.location}
 							municipality={popUpCard.city}
 							emptyMethod={popUpCard.method}
-							onClose={() => {
-								setPopUpCard({
-									location: '',
-									city: '',
-									method: '',
-								});
-							}}
 							img={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${selectedCoords[0]},${selectedCoords[1]},12,0/200x200?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
-							coords={[[12.56586039, 55.6793311]]}
 						></PopUp>
 					</Popup>
 				)}
-				<Source id="my-data" type="geojson" data={finalCities as any}>
-					<Layer {...layerStyle} />
+				<Source id="trashcans" type="geojson" data={finalCities as any}>
+					<Layer {...layerStyleTrashCans} />
+				</Source>
+				<Source
+					id="recycleCentres"
+					type="geojson"
+					data={recycleStations as any}
+				>
+					<Layer {...layerStyleRecycleCentre} />
 				</Source>
 				<NavigationControl
 					style={{ backgroundColor: darkMode === false ? 'white' : 'grey' }}
@@ -173,9 +195,9 @@ function App() {
 				></NavigationControl>
 				<Legend
 					legend1={redCircle}
-					legend2={blueCircle}
+					legend2={recycle}
 					legend3={yellowCircle}
-					legend4={greenCircle}
+					legend4={blueCircle}
 					darkMode={darkMode}
 				></Legend>
 			</Map>
